@@ -29,23 +29,31 @@ And hosted locally on http://localhost:8080/
 ## Running The Development Server
 
 In order to run the application locally you will need to do the following:
+
 1- Create 2 postgres databases one for testing and one for the application.
+
 2- Open 'setup.sh' file in project directory and put the two databases urls in the DATABASE_URL and the TEST_DATABASE_URL.
+
 3- Create a virtual enviroment and run it.
+
 4- Install all the requirements by navigating to the project directory and running
 '''bash
 pip install -r requirements.txt
 '''
+
 5- Go to the 'setup.sh' file and make sure that the enviromental variables CASTING_ASSISTANT_TOKEN, CASTING_DIRECTOR_TOKEN, and EXECUTIVE_PRODUCER_TOKEN have valid tokens (no need to do this withing 24 hours of submitting the project)
+
 6- Run the following commands to obtain the enviromental variables and create the tables
 '''bash
 source setup.sh
 python manage.py db upgrade
 '''
+
 7- Run the following command to test the application
 '''bash
 python test_app.py
 '''
+
 8- If all the test cases have passed run the following command to start the server
 '''bash
 python app.py
@@ -71,132 +79,236 @@ Executive Producer - (permissions: get:actor-details, get:movie-details, post:ac
 description part in the errors return the exact reason of why this error occured.
 
 400-bad request:
+
 returns {
+
             'success': False,
+
             'error': 400,
+
             'message': 'bad request',
+
             'description': error.description
+
         }
 
 401-unauthorized:
+
 returns {
+
             'success': False,
+
             'error': 401,
+
             'message': 'unauthorized',
+
             'description': error.description
+
         }
 
 403-forbidden:
+
 returns {
+
             'success': False,
+
             'error': 403,
+
             'message': 'forbidden',
+
          }
 
 404-resource not found:
+
 returns {
+
             'success': False,
+
             'error': 404,
+
             'message': 'resource not found',
+
             'description': error.description
+
         }
 
 405-method not allowed:
+
 returns {
+
             'success': False,
+
             'error': 405,
+
             'message': 'method not allowed',
+
             'description': error.description
+
         }
 
 422-unprocessable:
+
 returns {
+
             'success': False,
+
             'error': 422,
+
             'message': 'unprocessable',
+
         }
 
 500-internal server error:
+
 returns {
+
             'success': False,
+
             'error': 500,
+
             'message': 'internal server error',
+
             'description': error.description
+
         }
 
 ### APIs
 
 GET '/actors'
+
 POST '/actors'
+
 GET '/actors/{actor_id}'
+
 PATCH '/actors/{actor_id}'
+
 DELETE '/actors/{actor_id}'
+
 POST '/actors/{actor_id}/movie'
+
 DELETE '/actors/{actor_id}/movie/{movie_id}'
+
 GET '/movies'
+
 POST '/movies'
+
 GET '/movies/{movie_id}'
+
 PATCH '/movies/{movie_id}'
+
 DELETE '/movies/{movie_id}'
+
 POST '/movies/{movie_id}/actor'
+
 DELETE '/movies/{movie_id}/actor/{actor_id}'
+
 
 Note: Before testing the APIs please make sure to set the variable executive_producer_token to the value EXECUTIVE_PRODUCER_TOKEN from the 'setup.sh' file
 -----------------------------------------------
 GET '/actors'
+
 -Returns actors paginated.
+
 -Returns a success value, total_actors value and a list of actors objects each object has id, image_link, and name values.
+
 -Supports paging and returns a maximum of 8 actors.
+
 -Doesn't require an authentication.
 
 sample:
+
 curl -X GET https://casting-agency997.herokuapp.com/actors?page=1
  
 {
+
     "actors": [
+
         {
+
             "id": 1,
+
             "image_link": null,
+
             "name": "Angelina Joliey"
+
         },
+
         {
+
             "id": 2,
+
             "image_link": null,
+
             "name": "Brad Pitt"
+
         },
+
         {
+
             "id": 3,
+
             "image_link": null,
+
             "name": "Kevin Costner"
+
         },
+
         {
+
             "id": 4,
+
             "image_link": null,
+
             "name": "Mel Gibson"
+
         },
+
         {
+
             "id": 5,
+
             "image_link": null,
+
             "name": "Adam Sandler"
+
         },
+
         {
+
             "id": 6,
+
             "image_link": null,
+
             "name": "Tom Hanks"
+
         },
+
         {
+
             "id": 7,
+
             "image_link": null,
+
             "name": "Will Smith"
+
         },
+
         {
+
             "id": 8,
+
             "image_link": null,
+
             "name": "Leonardo Dicaprio"
+
         }
+
     ],
+
     "success": true,
+
     "total_actors": 10
+
 }
 
 
