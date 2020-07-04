@@ -53,18 +53,20 @@ def create_app(test_config=None):
             actors_formated = paginate(request, actors)
             if(len(actors_formated) == 0):
                 error = 404
+                description = 'No actors found'
             else:
                 return jsonify({
                     'success': True,
-                    'total_actors': len(actors_formated),
+                    'total_actors': len(actors),
                     'actors': actors_formated
                     })
         except:
             db.session.rollback()
             error = 422
+            description = 'Something went wrong!'
         finally:
             if(error):
-                abort(error)
+                abort(error, description)
 
     @app.route('/actors', methods=['POST'])
     @requires_auth('post:actors')
@@ -248,18 +250,20 @@ def create_app(test_config=None):
             movies_formated = paginate(request, movies)
             if(len(movies_formated) == 0):
                 error = 404
+                description = 'No movies found'
             else:
                 return jsonify({
                     'success': True,
-                    'total_movies': len(movies_formated),
+                    'total_movies': len(movies),
                     'movies': movies_formated
                     })
         except:
             db.session.rollback()
             error = 422
+            description = 'Something went wrong!'
         finally:
             if(error):
-                abort(error)
+                abort(error, description)
 
     @app.route('/movies', methods=['POST'])
     @requires_auth('post:movies')
