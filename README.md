@@ -42,7 +42,7 @@ pip install -r requirements.txt
 source setup.sh
 python manage.py db upgrade
 '''
-7- Run the following command to test the server
+7- Run the following command to test the application
 '''bash
 python test_app.py
 '''
