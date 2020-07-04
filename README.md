@@ -24,6 +24,8 @@ pip install -r requirements.txt
 
 The application is hosted on https://casting-agency997.herokuapp.com/
 
+And hosted locally on http://localhost:8080/
+
 ## Running The Development Server
 
 In order to run the application locally you will need to do the following:
@@ -135,62 +137,74 @@ DELETE '/movies/{movie_id}'
 POST '/movies/{movie_id}/actor'
 DELETE '/movies/{movie_id}/actor/{actor_id}'
 
-
+Note: Before testing the APIs please make sure to set the variable executive_producer_token to the value EXECUTIVE_PRODUCER_TOKEN from the 'setup.sh' file
 -----------------------------------------------
 GET '/actors'
+-Returns actors paginated.
 -Returns a success value, total_actors value and a list of actors objects each object has id, image_link, and name values.
 -Supports paging and returns a maximum of 8 actors.
 -Doesn't require an authentication.
 
 sample:
-curl -X GET http://localhost:8080/actors?page=1
+curl -X GET https://casting-agency997.herokuapp.com/actors?page=1
  
 {
-  "actors": [
-    {
-      "id": 1, 
-      "image_link": null, 
-      "name": "Leonardo Dicaprio"
-    }, 
-    {
-      "id": 2, 
-      "image_link": null, 
-      "name": "Brad Pitt"
-    }, 
-    {
-      "id": 3, 
-      "image_link": null, 
-      "name": "Jennifer Aniston"
-    }, 
-    {
-      "id": 4, 
-      "image_link": "https://i.insider.com/5e9dde0992e8ba7bde291467?width=1100&format=jpeg&auto=webp", 
-      "name": "Angelina Jolie"
-    }, 
-    {
-      "id": 5, 
-      "image_link": null, 
-      "name": "Adam Sandler"
-    }, 
-    {
-      "id": 6, 
-      "image_link": null, 
-      "name": "Jacky Chan"
-    }
-  ], 
-  "success": true, 
-  "total_actors": 6
+    "actors": [
+        {
+            "id": 1,
+            "image_link": null,
+            "name": "Angelina Joliey"
+        },
+        {
+            "id": 2,
+            "image_link": null,
+            "name": "Brad Pitt"
+        },
+        {
+            "id": 3,
+            "image_link": null,
+            "name": "Kevin Costner"
+        },
+        {
+            "id": 4,
+            "image_link": null,
+            "name": "Mel Gibson"
+        },
+        {
+            "id": 5,
+            "image_link": null,
+            "name": "Adam Sandler"
+        },
+        {
+            "id": 6,
+            "image_link": null,
+            "name": "Tom Hanks"
+        },
+        {
+            "id": 7,
+            "image_link": null,
+            "name": "Will Smith"
+        },
+        {
+            "id": 8,
+            "image_link": null,
+            "name": "Leonardo Dicaprio"
+        }
+    ],
+    "success": true,
+    "total_actors": 10
 }
 
 
 -----------------------------------------------
 POST '/actors'
+-Adds new actors.
 -Returns a success value.
+-Takes 2 inputs name and image_link but image_link is optional.
 -Requires (post:actors) permission.
--Takes 2 inputs name and image_link but image_link is optional
 
 sample:
-curl -H "Authorization: Bearer ${casting_director_token}" -H "Content-Type: application/json" -X POST http://localhost:8080/actors -d '{"name": "Johnny Depp", "image_link": "https://media1.popsugar-assets.com/files/thumbor/SzH64gnTws09oWZaWy6RrXpq6gI/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2018/07/13/027/n/1922398/a3f0a2e05b4938311543f8.44799569_/i/Johnny-Depp.jpg"}'
+curl -H "Authorization: Bearer ${executive_producer_token}" -H "Content-Type: application/json" -X POST https://casting-agency997.herokuapp.com/actors -d '{"name": "Johnny Depp", "image_link": "https://media1.popsugar-assets.com/files/thumbor/SzH64gnTws09oWZaWy6RrXpq6gI/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2018/07/13/027/n/1922398/a3f0a2e05b4938311543f8.44799569_/i/Johnny-Depp.jpg"}'
  
 {
   "success": true
@@ -199,426 +213,241 @@ curl -H "Authorization: Bearer ${casting_director_token}" -H "Content-Type: appl
 
 -----------------------------------------------
 GET '/actors/{actor_id}'
+-Returns detailed information about the selected actor(here it's his movies).
 -Returns a success value, id value, image_link value, name value and a list of movies objects that this actor has acted in each object has id, image_link, and name values.
--Requires (get:actor-details) permission
+-Requires (get:actor-details) permission.
 
 sample:
-curl -X GET http://localhost:8080/actors?page=1
+curl -H "Authorization: Bearer ${executive_producer_token}" -X GET https://casting-agency997.herokuapp.com/actors/2
  
 {
-  "actors": [
-    {
-      "id": 1, 
-      "image_link": null, 
-      "name": "Leonardo Dicaprio"
-    }, 
-    {
-      "id": 2, 
-      "image_link": null, 
-      "name": "Brad Pitt"
-    }, 
-    {
-      "id": 3, 
-      "image_link": null, 
-      "name": "Jennifer Aniston"
-    }, 
-    {
-      "id": 4, 
-      "image_link": "https://i.insider.com/5e9dde0992e8ba7bde291467?width=1100&format=jpeg&auto=webp", 
-      "name": "Angelina Jolie"
-    }, 
-    {
-      "id": 5, 
-      "image_link": null, 
-      "name": "Adam Sandler"
-    }, 
-    {
-      "id": 6, 
-      "image_link": null, 
-      "name": "Jacky Chan"
-    }
-  ], 
-  "success": true, 
-  "total_actors": 6
+    "id": 2,
+    "image_link": null,
+    "movies": [
+        {
+            "id": 5,
+            "image_link": null,
+            "name": "Mr. & Mrs. Smith"
+        },
+        {
+            "id": 7,
+            "image_link": null,
+            "name": "Troy"
+        }
+    ],
+    "name": "Brad Pitt",
+    "success": true
 }
 
 
 -----------------------------------------------
-GET '/questions'
--Returns two lists one of categories values and one of questions objects, and a current_category value, success value, and total_questions value
--Results are paginated in groups of 10 include a request argument to choose page number starting from 1
-
-samlpe:
-curl -X GET http://localhost:5000/questions?page=1
-
-{
-  "categories": [
-    "Science", 
-    "Art", 
-    "Geography", 
-    "History", 
-    "Entertainment", 
-    "Sports"
-  ], 
-  "current_category": null, 
-  "questions": [
-    {
-      "answer": "Maya Angelou", 
-      "category": 4, 
-      "difficulty": 2, 
-      "id": 5, 
-      "question": "Whose autobiography is entitled 'I Know Why the Caged Bird Sings'?"
-    }, 
-    {
-      "answer": "Muhammad Ali", 
-      "category": 4, 
-      "difficulty": 1, 
-      "id": 9, 
-      "question": "What boxer's original name is Cassius Clay?"
-    }, 
-    {
-      "answer": "Apollo 13", 
-      "category": 5, 
-      "difficulty": 4, 
-      "id": 2, 
-      "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
-    }, 
-    {
-      "answer": "Tom Cruise", 
-      "category": 5, 
-      "difficulty": 4, 
-      "id": 4, 
-      "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
-    }, 
-    {
-      "answer": "Edward Scissorhands", 
-      "category": 5, 
-      "difficulty": 3, 
-      "id": 6, 
-      "question": "What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?"
-    }, 
-    {
-      "answer": "Brazil", 
-      "category": 6, 
-      "difficulty": 3, 
-      "id": 10, 
-      "question": "Which is the only team to play in every soccer World Cup tournament?"
-    }, 
-    {
-      "answer": "Uruguay", 
-      "category": 6, 
-      "difficulty": 4, 
-      "id": 11, 
-      "question": "Which country won the first ever soccer World Cup in 1930?"
-    }, 
-    {
-      "answer": "George Washington Carver", 
-      "category": 4, 
-      "difficulty": 2, 
-      "id": 12, 
-      "question": "Who invented Peanut Butter?"
-    }, 
-    {
-      "answer": "Lake Victoria", 
-      "category": 3, 
-      "difficulty": 2, 
-      "id": 13, 
-      "question": "What is the largest lake in Africa?"
-    }, 
-    {
-      "answer": "The Palace of Versailles", 
-      "category": 3, 
-      "difficulty": 3, 
-      "id": 14, 
-      "question": "In which royal palace would you find the Hall of Mirrors?"
-    }
-  ], 
-  "success": true, 
-  "total_questions": 19
-}
-
------------------------------------------------
-DELETE '/questions/{question_id}'
--Deletes the question of the given ID if it exists, and returns two lists one of categories values and one of questions objects, and a current_category value, success value, and total_questions value paginated in group of 10 to update front-end
+PATCH '/actors/{actor_id}'
+-Updates the selected actor.
+-Returns a success value.
+-Takes two inputs image_link and name both are optional.
+-Requires (patch:actors) permission.
 
 sample:
-curl -X DELETE http://localhost:5000/questions/5?page=1
-
-{
-  "categories": [
-    "Science", 
-    "Art", 
-    "Geography", 
-    "History", 
-    "Entertainment", 
-    "Sports"
-  ], 
-  "current_category": null, 
-  "questions": [
-    {
-      "answer": "Muhammad Ali", 
-      "category": 4, 
-      "difficulty": 1, 
-      "id": 9, 
-      "question": "What boxer's original name is Cassius Clay?"
-    }, 
-    {
-      "answer": "Apollo 13", 
-      "category": 5, 
-      "difficulty": 4, 
-      "id": 2, 
-      "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
-    }, 
-    {
-      "answer": "Tom Cruise", 
-      "category": 5, 
-      "difficulty": 4, 
-      "id": 4, 
-      "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
-    }, 
-    {
-      "answer": "Edward Scissorhands", 
-      "category": 5, 
-      "difficulty": 3, 
-      "id": 6, 
-      "question": "What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?"
-    }, 
-    {
-      "answer": "Brazil", 
-      "category": 6, 
-      "difficulty": 3, 
-      "id": 10, 
-      "question": "Which is the only team to play in every soccer World Cup tournament?"
-    }, 
-    {
-      "answer": "Uruguay", 
-      "category": 6, 
-      "difficulty": 4, 
-      "id": 11, 
-      "question": "Which country won the first ever soccer World Cup in 1930?"
-    }, 
-    {
-      "answer": "George Washington Carver", 
-      "category": 4, 
-      "difficulty": 2, 
-      "id": 12, 
-      "question": "Who invented Peanut Butter?"
-    }, 
-    {
-      "answer": "Lake Victoria", 
-      "category": 3, 
-      "difficulty": 2, 
-      "id": 13, 
-      "question": "What is the largest lake in Africa?"
-    }, 
-    {
-      "answer": "The Palace of Versailles", 
-      "category": 3, 
-      "difficulty": 3, 
-      "id": 14, 
-      "question": "In which royal palace would you find the Hall of Mirrors?"
-    }, 
-    {
-      "answer": "Agra", 
-      "category": 3, 
-      "difficulty": 2, 
-      "id": 15, 
-      "question": "The Taj Mahal is located in which Indian city?"
-    }
-  ], 
-  "success": true, 
-  "total_questions": 18
-}
-
------------------------------------------------
-POST '/questions'
--Creates a new question using the submitted question, answer, difficulty and category. Returns a success value.
-
-sample:
-curl http://localhost:5000/questions -X POST -H "Content-Type: application/json" -d '{"question":"Who is the first person to walk on the moon", "answer":"Neil Armstrong", "difficulty":"5", "category":"4"}'
-
+curl -H "Authorization: Bearer ${executive_producer_token}" -H "Content-Type: application/json" -X PATCH https://casting-agency997.herokuapp.com/actors/2 -d '{"image_link": "https://www.cheatsheet.com/wp-content/uploads/2020/06/Brad-Pitt-16-1024x681.jpg"}'
+ 
 {
   "success": true
 }
 
------------------------------------------------
-POST '/questions/search'
--Searches for questions using the submitted searchTerm, Returns success value, total_questions value and a list of questions with question phrase which the searchTerm is subset of, and paginates questions in groups of 10
-
-sample:
-curl http://localhost:5000/questions/search -X POST -H "Content-Type: application/json" -d '{"searchTerm":"What"}'
-
-{
-  "questions": [
-    {
-      "answer": "Muhammad Ali", 
-      "category": 4, 
-      "difficulty": 1, 
-      "id": 9, 
-      "question": "What boxer's original name is Cassius Clay?"
-    }, 
-    {
-      "answer": "Apollo 13", 
-      "category": 5, 
-      "difficulty": 4, 
-      "id": 2, 
-      "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
-    }, 
-    {
-      "answer": "Tom Cruise", 
-      "category": 5, 
-      "difficulty": 4, 
-      "id": 4, 
-      "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
-    }, 
-    {
-      "answer": "Edward Scissorhands", 
-      "category": 5, 
-      "difficulty": 3, 
-      "id": 6, 
-      "question": "What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?"
-    }, 
-    {
-      "answer": "Lake Victoria", 
-      "category": 3, 
-      "difficulty": 2, 
-      "id": 13, 
-      "question": "What is the largest lake in Africa?"
-    }, 
-    {
-      "answer": "Mona Lisa", 
-      "category": 2, 
-      "difficulty": 3, 
-      "id": 17, 
-      "question": "La Giaconda is better known as what?"
-    }, 
-    {
-      "answer": "The Liver", 
-      "category": 1, 
-      "difficulty": 4, 
-      "id": 20, 
-      "question": "What is the heaviest organ in the human body?"
-    }, 
-    {
-      "answer": "Blood", 
-      "category": 1, 
-      "difficulty": 4, 
-      "id": 22, 
-      "question": "Hematology is a branch of medicine involving the study of what?"
-    }
-  ], 
-  "success": true, 
-  "total_questions": 8
-}
 
 -----------------------------------------------
-GET '/categories/{category_id}/questions'
--Return questions with the given category_id if the questions exist.
--Return success value, current_category value,total_questions value, and a list of questions with the given category id and paginates them in groups of 10.
+DELETE '/actors/{actor_id}'
+-Deletes the selected actor.
+-Returns a success value.
+-Requires (delete:actors) permission.
 
 sample:
-curl -X GET http://localhost:5000/categories/2/questions
-
+curl -H "Authorization: Bearer ${executive_producer_token}" -H "Content-Type: application/json" -X DELETE https://casting-agency997.herokuapp.com/actors/11
+ 
 {
-  "current_category": null, 
-  "questions": [
-    {
-      "answer": "Escher", 
-      "category": 2, 
-      "difficulty": 1, 
-      "id": 16, 
-      "question": "Which Dutch graphic artist\u2013initials M C was a creator of optical illusions?"
-    }, 
-    {
-      "answer": "Mona Lisa", 
-      "category": 2, 
-      "difficulty": 3, 
-      "id": 17, 
-      "question": "La Giaconda is better known as what?"
-    }, 
-    {
-      "answer": "One", 
-      "category": 2, 
-      "difficulty": 4, 
-      "id": 18, 
-      "question": "How many paintings did Van Gogh sell in his lifetime?"
-    }, 
-    {
-      "answer": "Jackson Pollock", 
-      "category": 2, 
-      "difficulty": 2, 
-      "id": 19, 
-      "question": "Which American artist was a pioneer of Abstract Expressionism, and a leading exponent of action painting?"
-    }
-  ], 
-  "success": true, 
-  "total_questions": 4
-}
-
------------------------------------------------
-POST '/quizzes'
--Return a randomized question object, and success value using the submitted quiz_category object and previous_questions list, where the randomized question not in the previous_questions list and matches with the submitted quiz category
--To retrieve question with any category set quiz_category["id"]=0
-
-sample:
-curl http://localhost:5000/quizzes -X POST -H "Content-Type: application/json" -d '{"previous_questions":[],"quiz_category":{"type":"Art","id":2}}'
-
-{
-  "question": {
-    "answer": "Escher", 
-    "category": 2, 
-    "difficulty": 1, 
-    "id": 16, 
-    "question": "Which Dutch graphic artist\u2013initials M C was a creator of optical illusions?"
-  }, 
   "success": true
 }
 
 
+-----------------------------------------------
+POST '/actors/{actor_id}/movie'
+-Adds an existing movie in the app to the selected actor list of movies
+-Returns a success value.
+-Takes 1 input movie_id.
+-Requires (post:movies-to-actors) permission.
+
+sample:
+curl -H "Authorization: Bearer ${executive_producer_token}" -H "Content-Type: application/json" -X POST https://casting-agency997.herokuapp.com/actors/12/movie -d '{"movie_id":20}'
+ 
+{
+  "success": true
+}
 
 
+-----------------------------------------------
+DELETE '/actors/{actor_id}/movie/{movie_id}'
+-Deletes the selected movie from the actors movies list (the movie is not deleted from the app)
+-Returns a success value.
+-Requires (delete:movies-from-actors) permission.
+
+sample:
+curl -H "Authorization: Bearer ${executive_producer_token}" -X DELETE https://casting-agency997.herokuapp.com/actors/12/movie/20
+ 
+{
+  "success": true
+}
 
 
+-----------------------------------------------
+GET '/movies'
+-Returns movies paginated.
+-Returns a success value, total_movies value and a list of movies objects each object has id, image_link, and name values.
+-Supports paging and returns a maximum of 8 movies.
+-Doesn't require an authentication.
+
+sample:
+curl -X GET https://casting-agency997.herokuapp.com/movies?page=1
+ 
+{
+    "movies": [
+        {
+            "id": 1,
+            "image_link": null,
+            "name": "Lethal Weapon"
+        },
+        {
+            "id": 2,
+            "image_link": null,
+            "name": "Brave Heart"
+        },
+        {
+            "id": 4,
+            "image_link": null,
+            "name": "What Women Want"
+        },
+        {
+            "id": 5,
+            "image_link": null,
+            "name": "Mr. & Mrs. Smith"
+        },
+        {
+            "id": 6,
+            "image_link": null,
+            "name": "Wanted"
+        },
+        {
+            "id": 7,
+            "image_link": null,
+            "name": "Troy"
+        },
+        {
+            "id": 8,
+            "image_link": null,
+            "name": "Dance With Wolves"
+        },
+        {
+            "id": 9,
+            "image_link": null,
+            "name": "Man Of Steel"
+        }
+    ],
+    "success": true,
+    "total_movies": 18
+}
+
+-----------------------------------------------
+POST '/movies'
+-Adds new movies.
+-Returns a success value.
+-Takes 2 inputs name and image_link but image_link is optional.
+-Requires (post:movies) permission.
+
+sample:
+curl -H "Authorization: Bearer ${executive_producer_token}" -H "Content-Type: application/json" -X POST https://casting-agency997.herokuapp.com/movies -d '{"name": "Pirates Of The Cariebian"}'
+ 
+{
+  "success": true
+}
 
 
+-----------------------------------------------
+GET '/movies/{movie_id}'
+-Returns detailed information about the selected movie (here it's the movie actors).
+-Returns a success value, id value, image_link value, name value and a list of actors objects that have acted in this movie object has id, image_link, and name values.
+-Requires (get:movie-details) permission.
+
+sample:
+curl -H "Authorization: Bearer ${executive_producer_token}" -X GET https://casting-agency997.herokuapp.com/movies/2
+ 
+{
+    "actors": [
+        {
+            "id": 4,
+            "image_link": null,
+            "name": "Mel Gibson"
+        }
+    ],
+    "id": 2,
+    "image_link": null,
+    "name": "Brave Heart",
+    "success": true
+}
 
 
+-----------------------------------------------
+PATCH '/movies/{movie_id}'
+-Updates the selected movie.
+-Returns a success value.
+-Takes two inputs image_link and name both are optional.
+-Requires (patch:movies) permission.
+
+sample:
+curl -H "Authorization: Bearer ${executive_producer_token}" -H "Content-Type: application/json" -X PATCH https://casting-agency997.herokuapp.com/movies/20 -d '{"name":"Pirates OF The Cariebian 2"}'
+ 
+{
+  "success": true
+}
 
 
+-----------------------------------------------
+DELETE '/movies/{movie_id}'
+-Deletes the selected movie.
+-Returns a success value.
+-Requires (delete:movies) permission.
+
+sample:
+curl -H "Authorization: Bearer ${executive_producer_token}" -H "Content-Type: application/json" -X DELETE https://casting-agency997.herokuapp.com/movies/21
+ 
+{
+  "success": true
+}
 
 
+-----------------------------------------------
+POST '/movies/{movie_id}/actor'
+-Adds an existing actor in the app to the selected movie list of actors
+-Returns a success value.
+-Requires (post:movies-to-actors) permission.
+-Takes 1 input actor_id
+
+sample:
+curl -H "Authorization: Bearer ${executive_producer_token}" -H "Content-Type: application/json" -X POST https://casting-agency997.herokuapp.com/movies/21/actor -d '{"actor_id":20}'
+ 
+{
+  "success": true
+}
 
 
+-----------------------------------------------
+DELETE '/movies/{movie_id}/actor/{actor_id}'
+-Deletes the selected actor from the movie actors list (the actor is not deleted from the app)
+-Returns a success value.
+-Requires (delete:movies-from-actors) permission.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+sample:
+curl -H "Authorization: Bearer ${executive_producer_token}" -X DELETE https://casting-agency997.herokuapp.com/movies/22/actor/20
+ 
+{
+  "success": true
+}
 
