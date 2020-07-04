@@ -37,6 +37,10 @@ In order to run the application locally you will need to do the following:
 pip install -r requirements.txt
 '''
 5- Go to the 'setup.sh' file and make sure that the enviromental variables CASTING_ASSISTANT_TOKEN, CASTING_DIRECTOR_TOKEN, and EXECUTIVE_PRODUCER_TOKEN have valid tokens (no need to do this withing 24 hours of submitting the project)
+7- Run the following command to create the tables
+'''bash
+python manage.py db upgrade
+'''
 6- Run the following commands to obtain the enviromental variables and test the server
 '''bash
 source setup.sh
